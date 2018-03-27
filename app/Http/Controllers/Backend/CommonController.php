@@ -10,7 +10,42 @@ class CommonController extends Controller
 {
     
     public function __construct() {
-        
+//         if(Auth::check() == false){
+//             echo 11;exit();
+//         //   return Redirect::guest('login');
+//        }
+    }
+    
+    
+    /**
+     * json （可跨域）
+     * @param type $code  返回状态码
+     * @param type $msg   提示
+     * @param type $data  内容[]
+     * @param type $url   请求接口
+     */
+    public function jsonp_return($code, $data, $msg = '', $url = '',$type=false) {
+       $origin = isset($_SERVER['HTTP_ORIGIN']) ? $_SERVER['HTTP_ORIGIN'] : '';
+        $url = $url ? $url : $origin;
+        $arr = array('code' => $code, 'msg' => $origin, 'url' => $url, 'data' => $data);
+        $header = header('Content-Type', 'post')->header('Access-Control-Allow-Origin','*')->header('Access-Control-Allow-Methods','POST');
+        return response()->json($arr)->$header;
+        exit();
+    }
+    
+     /**
+     * json （可跨域）
+     * @param type $code  返回状态码
+     * @param type $msg   提示
+     * @param type $data  内容[]
+     * @param type $url   请求接口
+     */
+    public function json_return($code,$msg = '',$data,$url = '',$type=false) {
+        $origin = isset($_SERVER['HTTP_ORIGIN']) ? $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'] : '';
+        $url = $url ? $url : $origin;
+        $arr = array('code' => $code, 'msg' => $msg, 'url' => $url, 'data' => $data);
+        return response()->json($arr);
+        exit();
     }
     
     /**

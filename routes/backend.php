@@ -11,7 +11,9 @@
 |
 */
 
-Route::group(array('prefix'=>'backend','namespace'=>'backend'),function()
+Route::any('backend/login','Backend\LoginController@Login');
+///,['middleware' => ['AdminSession']]
+Route::group(array('prefix'=>'backend','namespace'=>'Backend','middleware' =>'AdminSession'),function()
 {
     Route::get('index','IndexController@Index');
     Route::get('main','IndexController@Main');

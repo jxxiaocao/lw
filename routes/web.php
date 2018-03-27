@@ -12,7 +12,7 @@
 */
 
 
-require __DIR__.'/backend.php';
+require_once __DIR__.'/backend.php';
 
 Route::get('/', function () {
     return view('welcome');
